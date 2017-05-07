@@ -1,0 +1,489 @@
+
+/*-----------------------------------------------------------------*\
+  	BUTTONS (FROM BOOTSTRAP 3.02)
+\*-----------------------------------------------------------------*/
+
+.btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	.button-border-radius();
+	span {
+		vertical-align: middle;
+	}
+	[class^="icon-"],
+	[class*=" icon-"] {
+		margin-right: 6px;
+		vertical-align: middle;
+		font-size: 12px;
+	}
+}
+
+.btn:focus {
+	outline: thin dotted #333;
+	outline: 4px auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+}
+
+.btn:hover,
+.btn:focus {
+	color: #333333;
+	text-decoration: none;
+}
+
+.btn:active,
+.btn.active {
+	outline: 0;
+	background-image: none;
+	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn.disabled,
+.btn[disabled],
+fieldset[disabled] .btn {
+	cursor: not-allowed;
+	pointer-events: none;
+	opacity: 0.65;
+	filter: alpha(opacity=65);
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.btn-default {
+	color: @button-default-text;
+	background-color: @button-default-bgr;
+	border-color: @gs-medium;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+	color: @button-default-text-hover;
+	background-color: @button-default-bgr-hover;
+	border-color: @gs-medium;
+	-webkit-box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	-moz-box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	.transition(@transition-box-shadow);
+}
+
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+	background-image: none;
+}
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+	background-color: @button-default-bgr-disabled;
+	border-color: darken(@button-default-bgr-disabled, 10%);
+}
+
+//
+// Button groups
+// --------------------------------------------------
+
+// Make the div behave like a button
+.btn-group,
+.btn-group-vertical {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle; // match .btn alignment given font-size hack above
+	> .btn {
+		position: relative;
+		float: left;
+		// Bring the "active" button to the front
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			z-index: @zBtnGroupVertical;
+		}
+		&:focus {
+			// Remove focus outline when dropdown JS adds it after closing the menu
+			outline: none;
+		}
+	}
+}
+// Prevent double borders when buttons are next to each other
+.btn-group {
+	.btn + .btn,
+	.btn + .btn-group,
+	.btn-group + .btn,
+	.btn-group + .btn-group {
+		margin-left: -1px;
+	}
+}
+
+.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+	border-radius: 0;
+}
+
+// Set corners individual because sometimes a single button can be in a .btn-group and we need :first-child and :last-child to both match
+.btn-group > .btn:first-child {
+	margin-left: 0;
+	&:not(:last-child):not(.dropdown-toggle) {
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+// Need .dropdown-toggle since :last-child doesn't apply given a .dropdown-menu immediately after it
+.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .dropdown-toggle:not(:first-child) {
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+}
+
+// Custom edits for including btn-groups within btn-groups (useful for including dropdown buttons within a btn-group)
+.btn-group > .btn-group {
+	float: left;
+}
+.btn-group > .btn-group:not(:first-child):not(:last-child) > .btn {
+	border-radius: 0;
+}
+.btn-group > .btn-group:first-child {
+	> .btn:last-child,
+	> .dropdown-toggle {
+		border-bottom-right-radius: 0;
+	}
+}
+.btn-group > .btn-group:last-child > .btn:first-child {
+	border-bottom-left-radius: 0;
+}
+
+// On active and open, don't show outline
+.btn-group .dropdown-toggle:active,
+.btn-group.open .dropdown-toggle {
+	outline: 0;
+}
+
+/*-----------------------------------------------------------------*\
+  	PRIMARY BUTTON STYLE RE-DEFINED
+\*-----------------------------------------------------------------*/
+.btn-primary {
+	color: @button-primary-text;
+	background-color: @button-primary-bgr;
+	border-color: @button-primary-bgr;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+	color: @button-primary-text-hover;
+	background-color: @button-primary-bgr-hover;
+	border-color: @button-primary-bgr-hover;
+	.transition();
+}
+
+.btn-primary:focus {
+	color: @button-primary-text;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+	background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+	background-color: @button-primary-bgr-disabled;
+	border-color: @button-primary-bgr-disabled;
+}
+
+.btn-secondary {
+	color: @button-secondary-text;
+	background-color: @button-secondary-bgr;
+	border-color: @button-secondary-bgr;
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary.active,
+.open .dropdown-toggle.btn-secondary {
+	color: @button-secondary-text-hover;
+	background-color: @button-secondary-bgr-hover;
+	border-color: @button-secondary-bgr-hover;
+}
+
+.btn-secondary:focus {
+	color: @button-secondary-text;
+}
+
+.btn-secondary:active,
+.btn-secondary.active,
+.open .dropdown-toggle.btn-secondary {
+	background-image: none;
+}
+
+.btn-secondary.disabled,
+.btn-secondary[disabled],
+fieldset[disabled] .btn-secondary,
+.btn-secondary.disabled:hover,
+.btn-secondary[disabled]:hover,
+fieldset[disabled] .btn-secondary:hover,
+.btn-secondary.disabled:focus,
+.btn-secondary[disabled]:focus,
+fieldset[disabled] .btn-secondary:focus,
+.btn-secondary.disabled:active,
+.btn-secondary[disabled]:active,
+fieldset[disabled] .btn-secondary:active,
+.btn-secondary.disabled.active,
+.btn-secondary[disabled].active,
+fieldset[disabled] .btn-secondary.active {
+	background-color: @button-secondary-bgr-disabled;
+	border-color: @button-secondary-bgr-disabled;
+}
+
+// btn tertiary
+.btn-tertiary {
+	color: @button-tertiary-text;
+	background-color: @button-tertiary-bgr;
+	border-color: @button-tertiary-bgr;
+}
+
+.btn-tertiary:hover,
+.btn-tertiary:active,
+.btn-tertiary.active,
+.open .dropdown-toggle.btn-tertiary {
+	color: @button-tertiary-text-hover;
+	background-color: @button-tertiary-bgr-hover;
+	border-color: @button-tertiary-bgr-hover;
+}
+
+.btn-tertiary:focus {
+	color: @button-tertiary-text;
+}
+
+.btn-tertiary:active,
+.btn-tertiary.active,
+.open .dropdown-toggle.btn-tertiary {
+	background-image: none;
+}
+
+.btn-tertiary.disabled,
+.btn-tertiary[disabled],
+fieldset[disabled] .btn-tertiary,
+.btn-tertiary.disabled:hover,
+.btn-tertiary[disabled]:hover,
+fieldset[disabled] .btn-tertiary:hover,
+.btn-tertiary.disabled:focus,
+.btn-tertiary[disabled]:focus,
+fieldset[disabled] .btn-tertiary:focus,
+.btn-tertiary.disabled:active,
+.btn-tertiary[disabled]:active,
+fieldset[disabled] .btn-tertiary:active,
+.btn-tertiary.disabled.active,
+.btn-tertiary[disabled].active,
+fieldset[disabled] .btn-tertiary.active {
+	background-color: @button-tertiary-bgr-disabled;
+	border-color: @button-tertiary-bgr-disabled;
+}
+
+.btn-link {
+	color: #428bca;
+	font-weight: normal;
+	cursor: pointer;
+	border-radius: 0;
+}
+
+.btn-link,
+.btn-link:active,
+.btn-link[disabled],
+fieldset[disabled] .btn-link {
+	background-color: transparent;
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.btn-link,
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
+	border-color: transparent;
+}
+
+.btn-link:hover,
+.btn-link:focus {
+	color: #2a6496;
+	background-color: transparent;
+	outline: none;
+	> span {
+		text-decoration: underline;
+	}
+}
+
+.btn-link[disabled]:hover,
+fieldset[disabled] .btn-link:hover,
+.btn-link[disabled]:focus,
+fieldset[disabled] .btn-link:focus {
+	color: #999999;
+	text-decoration: none;
+}
+
+.btn-lg {
+	padding: 8px 14px;
+	font-size: @font-large;
+	line-height: 1.33;
+	margin-right: 12px;
+	[class^="icon-"],
+	[class*=" icon-"] {
+		font-size: 14px;
+	}
+}
+
+.btn-sm,
+.btn-xs {
+	padding: 3px 8px;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.btn-xs {
+	padding: 1px 5px;
+}
+
+.btn-block {
+	display: block;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.btn-block + .btn-block {
+	margin-top: 5px;
+}
+
+input[type="submit"].btn-block,
+input[type="reset"].btn-block,
+input[type="button"].btn-block {
+	width: 100%;
+}
+
+.btn-default .caret {
+	border-top-color: #333333;
+}
+
+.btn-primary .caret,
+.btn-success .caret,
+.btn-secondary .caret,
+.btn-danger .caret,
+.btn-info .caret {
+	border-top-color: contrast(@button-primary-bgr, #000000, #FFFFFF, 50%);
+}
+
+/*-----------------------------------------------------------------*\
+  	PILLS (FROM BOOTSTRAP 3.02)
+\*-----------------------------------------------------------------*/
+.nav >li>span {
+	position: relative;
+	display: block;
+	-webkit-transition: all 0.1s ease-in-out;
+	-moz-transition: all 0.1s ease-in-out;
+	-ms-transition: all 0.1s ease-in-out;
+	-o-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		background-color: lighten(@brand-secondary, 30%);
+		color: contrast(@brand-secondary-light, #000000, #FFFFFF, 50%);
+	}
+}
+
+.nav.disabled > li > span {
+	&:hover,
+	&:focus {
+		background-color: transparent;
+		color: inherit;
+	}
+}
+
+.nav-pills {
+	> li {
+		float: left;
+
+		// Links rendered as pills
+		> span {
+			.button-border-radius();
+			//padding: set default padding for pills
+		}
+		+ li {
+			margin-left: 2px;
+		}
+
+		// Active state
+		&.active > span {
+			&,
+			&:hover,
+			&:focus {
+				color: contrast(@nav-tabs-active-link-hover-bg, #000000, #FFFFFF, 50%);
+				background-color: @nav-tabs-active-link-hover-bg;
+			}
+		}
+	}
+}
+
+
+/*-----------------------------------------------------------------*\
+  	KENDO BUTTONS
+\*-----------------------------------------------------------------*/
+.k-button:active {
+	background-color: @brand-secondary-light;
+	border-color: @brand-secondary-light;
+}
+
+/*------------------------------------------------------------------*\
+		Button Groups
+\*------------------------------------------------------------------*/
+.btnList {
+	.btn {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}

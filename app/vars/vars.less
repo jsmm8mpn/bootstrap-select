@@ -1,0 +1,235 @@
+@zFpxDynamicForm:			0;
+@zSideBar:					1;
+@zWorkflowMessageArea:		1;
+@zBtnGroupVertical:         2; /* .btn-group-vertical > .btn &.active { /* app/styles/buttons.less */
+@zPersistentHeaderFixed:	5; /* Peristent header fixed header ordering */
+@zDropTab:				  100;
+@zGridSubControlsDialog:  201;
+@zGridSubControls:	  	  202;
+@zFooter:                 500; /* application footer */  //todo why?
+@zStandardHeader:		  500; /* standard header */
+@zDropDownBackdrop:       990; /* .dropdown-backdrop { /* app/styles/dropdownSelect.less */
+@zDropDownMenu:          1000; /* .dropdown-menu { /*app/styles/dropdownSelect.less */
+@zCustomLinkAnimation: 	 1000;
+@zLoadingBar:            2000; /* #loading-bar .bar { /* app/styles/etc.less */
+@zDropDownArrowOpen:     2051; /* .bootstrap-select.show-menu-arrow.open > .btn { /* app/styles/dropdownSelect.less */
+@zProgressoMessage:		 5000; /* pregresso message */
+@zSlidePanelOverlay:    10000; /* .slidePanelOverlay { /* Slide Panel */
+@zSlidePanelLeft:		10001; /* slide panel left */
+@zdropDownMenuOpen: 	10005; /* .bootstrap-select.btn-group .dropdown-menu { /* app/styles/dropdownSelect.less */
+@zPopAnywhereDefault:	30000; /* Popanywhere default z */ //todo make higher since its overwritten in almost every use.
+@zNotification:			40000; /* NOtifications for error and info */
+@zClickBlocker:			50001; /* click blocker */
+@zSlidePanelHelp:		50002;
+
+
+/*------------------------------------------------------*\
+    GRAY SCALE COLORS - Not to be overridden by clients
+\*------------------------------------------------------*/
+
+@white: #FFF;
+@black: #000;
+@gs-light: #EAEAEA;
+@gs-medium-light: #ddd;
+@gs-medium: #AFAFAF;
+@gs-mediumDark: #878787;
+@gs-dark: #444547;
+
+
+
+/*------------------------------------------------------*\
+    BRAND COLORS
+\*------------------------------------------------------*/
+
+@brand-primary: #005b81;
+@brand-primary-light: lighten(@brand-primary, 10%);
+@brand-primary-dark: darken(@brand-primary, 20%);
+@brand-primary-highlight: desaturate(lighten(@brand-primary, 40%), 20%);
+
+@brand-secondary: #3c8bbd;
+@brand-secondary-light: lighten(@brand-secondary, 10%);
+@brand-secondary-dark: desaturate(darken(@brand-secondary, 10%), 0%);
+
+
+
+/*------------------------------------------------------*\
+    BUTTON COLORS
+\*------------------------------------------------------*/
+
+@button-primary-bgr: @brand-secondary;
+// @button-primary-bgr-hover: lighten(@button-primary-bgr, 10%);
+@button-primary-bgr-hover: @brand-secondary-light; /* HDS */
+@button-primary-text: contrast(@button-primary-bgr, #000000, #FFFFFF, 50%);
+@button-primary-text-hover: contrast(@button-primary-bgr-hover, #000000, #FFFFFF, 50%);
+@button-primary-bgr-disabled: desaturate(lighten(@button-primary-bgr, 15%), 20%);
+
+@button-secondary-bgr: @brand-primary;
+@button-secondary-bgr-hover: lighten(@button-secondary-bgr, 10%);
+@button-secondary-text: contrast(@button-secondary-bgr, #000000, #FFFFFF, 50%);
+@button-secondary-text-hover: contrast(@button-secondary-bgr-hover, #000000, #FFFFFF, 50%);
+@button-secondary-bgr-disabled: desaturate(lighten(@button-secondary-bgr, 15%), 20%);
+
+@button-tertiary-bgr: lighten(@gs-medium, 10%);
+@button-tertiary-bgr-hover: darken(@button-tertiary-bgr, 10%);
+@button-tertiary-text: contrast(@button-tertiary-bgr);
+@button-tertiary-text-hover: contrast(@button-tertiary-bgr-hover, #000000, #FFFFFF, 55%);
+@button-tertiary-bgr-disabled: desaturate(lighten(@button-tertiary-bgr, 10%), 20%);
+
+@button-default-bgr: @white;
+@button-default-bgr-hover: @white;
+@button-default-text: contrast(@button-default-bgr);
+@button-default-text-hover: contrast(@button-default-bgr-hover, #000000, #FFFFFF, 55%);
+@button-default-bgr-disabled: desaturate(lighten(@button-default-bgr, 10%), 20%);
+
+/*------------------------------------------------------*\
+    NAV-PILLS COLORS
+\*------------------------------------------------------*/
+@nav-tabs-link-hover-bg: @brand-secondary;
+@nav-tabs-active-link-hover-bg: @brand-secondary;
+
+/*------------------------------------------------------*\
+    RADIUS
+\*------------------------------------------------------*/
+
+@border-radius-base: 6px;
+
+// BUTTONS
+@button-bottom-right-radius: @border-radius-base;
+@button-bottom-left-radius: @border-radius-base;
+@button-top-right-radius: @border-radius-base;
+@button-top-left-radius: @border-radius-base;
+
+// Tabs
+@tab-top-right-radius: 0;
+@tab-top-left-radius: 0;
+@zModuleTabs: 10;
+
+/*------------------------------------------------------*\
+    OTHER VARIABLES
+\*------------------------------------------------------*/
+
+// Font Face
+@font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// Text Colors
+@text-primary: #333333;
+
+// Font Size - Modular Scale 12px @ 1:1.333
+@font-small: 9px;
+@font-medium: 12px;
+@font-large: 16px;
+@font-xlarge: 21px;
+@font-xxlarge: 23px;
+
+// Summary Page Field Height
+@summary-height: 30px;
+
+// Layout Dimensions
+@appMinWidth: 900px;
+@headerHeight: 74px;
+@footerHeight: 30px;
+@summaryTabsHeight: 40px;
+
+@transition-bgrColor: color .1s linear, background-color .1s ease-in-out;
+@transition-box-shadow: color .1s linear, box-shadow .1s ease-in-out;
+
+@error: #DC2B27;
+@warning: #FF8000;
+@changedValueBgr: desaturate(lighten(@brand-secondary-light, 30%), 20%);
+@actionableIcon: @brand-secondary;
+@actionableIconHover: @brand-secondary-light;
+
+@tableCellHeightMD: 42px; /* 50px - 8px padding for top + bottom set on TD  */
+@tableCellHeightLG: 67px; /* 75px - 8px padding for top + bottom set on TD  */
+@tableCellHeightXL: 92px; /* 100px - 8px padding for top + bottom set on TD  */
+
+@nestedTableIndentation: 20px;
+@grid-cell-padding: 8px 5px;
+@grid-header-padding: 5px;
+@config-grid-cell-padding: 5px;
+@config-grid-header-padding: 5px;
+
+
+/*------------------------------------------------------*\
+    MIXINS
+\*------------------------------------------------------*/
+
+.boxShadow() {
+	-moz-box-shadow: -2px 0 5px 0 #555;
+	-webkit-box-shadow: -2px 0 5px 0 #555;
+	box-shadow: -2px 0 5px 0 #555;
+}
+
+// THIS MIXIN IS FOR BUTTON RADIUS. YOU CAN CUSTOMIZE EACH CORNER RADIUS SIZE OR CHANGE THEM ALL AT ONCE (SEE RADIUS VARS ABOVE)
+// WHEN PRODUCTION MODE IS ON THE VENDOR PREFIXING CAN GO AWAY
+.button-border-radius() {
+	-webkit-border-top-left-radius: @button-top-left-radius;
+	-webkit-border-top-right-radius: @button-top-right-radius;
+	-webkit-border-bottom-right-radius: @button-bottom-right-radius;
+	-webkit-border-bottom-left-radius: @button-bottom-left-radius;
+
+	-moz-border-radius-topleft: @button-top-left-radius;
+	-moz-border-radius-topright: @button-top-right-radius;
+	-moz-border-radius-bottomright: @button-bottom-right-radius;
+	-moz-border-radius-bottomleft: @button-bottom-left-radius;
+
+	border-top-left-radius: @button-top-left-radius;
+	border-top-right-radius: @button-top-right-radius;
+	border-bottom-right-radius: @button-bottom-right-radius;
+	border-bottom-left-radius: @button-bottom-left-radius;
+}
+
+// MIXIN FOR TAB BORDER RADIUS
+.tab-border-radius() {
+	-webkit-border-top-left-radius: @tab-top-left-radius;
+	-webkit-border-top-right-radius: @tab-top-right-radius;
+
+	-moz-border-radius-topleft: @tab-top-left-radius;
+	-moz-border-radius-topright: @tab-top-right-radius;
+
+	border-top-left-radius: @tab-top-left-radius;
+	border-top-right-radius: @tab-top-right-radius;
+}
+
+// OTHER EDGECASE USES OF BORDER RADIUS
+.borderRadius() {
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.transition(@t: @transition-bgrColor) {
+	-webkit-transition: @t;
+	-moz-transition: @t;
+	-ms-transition: @t;
+	-o-transition: @t;
+}
+
+.box-sizing (@type: border-box) {
+	-webkit-box-sizing: @type;
+	-moz-box-sizing: @type;
+	box-sizing: @type;
+}
+
+.clearFix () {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+
+@color-red-error: rgb(185, 74, 72);
+@color-grey-arrow: rgba(204, 204, 204, 0.2);
+
+@width-default: 220px; // 3 960px-grid columns
+
+@zindex-select-dropdown: 1060; // must be higher than a modal background (1050)
+
+//** Placeholder text color
+@input-color-placeholder: #999;
+
+@import "../styles/bootstrap";
+@import "../styles/smartPicklist";
+
