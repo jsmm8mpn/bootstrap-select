@@ -1,4 +1,5 @@
 var Observable = require('./core/fpxObservable');
+var DataSource = require('./data/datasource');
 
 var wrapper = '<div class="btn-group bootstrap-select"/>';
 var button = '<button type="button" class="btn dropdown-toggle btn-default"/>';
@@ -28,6 +29,8 @@ var SmartPicklist = Observable.extend({
 //			options.labelProp = options.valueProp;
 //		}
 
+		this.dataSource = new DataSource(options.dataSource);
+
 
 		$element.addClass('btn-group bootstrap-select');
 		this._labelEl = $(label);
@@ -39,104 +42,122 @@ var SmartPicklist = Observable.extend({
 
 		var me = this;
 
-		if (options.options && options.options.length > 0) {
-			$element.click(function() {
+		$element.click(function() {
+			if (me._open) {
+				me.closeMenu();
+			} else {
 				me.openMenu();
-			});
-		}
+			}
+		});
+
+		$.each($.fn.smartPicklist._extensions, function(name, ext) {
+			if (options[name] && options[name].enabled) {
+				new ext(me, options[name]);
+			}
+		});
+
 		this.emit('initialized', this);
 	},
 
 	closeMenu: function() {
+		this.emit('closeMenuPre');
+		this._open = false;
 		this._menuEl.remove();
+		this.emit('closeMenuPost');
 	},
 
 	openMenu: function() {
+		this.emit('openMenuPre');
+
 		var me = this;
-		if (this._open) {
-			$('.bootstrap-select.open').remove();
-			this._open = false;
-		} else {
 
-			var ulEl = $(ul);
+		var ulEl = $(ul);
 
-			var picklistOptions = this._options.options;
-			var labelProp = this._options.labelProp;
-			for (var i = 0; i < picklistOptions.length; i++) {
-				var label = (typeof picklistOptions[i] === 'object')?(picklistOptions[i][labelProp] || ''):picklistOptions[i];
-				var li = '<li';
-				if (picklistOptions[i] === this._selectedOption) { // TODO: Won't work, if user passed in value
-					li += ' class="selected"';
-				}
-				li += ' ref="' + i + '"><a><span class="text">' + label + '</span></a></li>';
-				ulEl.append(li);
-			}
-
-			ulEl.on('click', 'li', function() {
-				var optionIdx = $(this).attr('ref');
-				this._selectedOption = picklistOptions[optionIdx];
-				var selectedLabel =  (typeof this._selectedOption === 'object')?(this._selectedOption.label || ''):this._selectedOption;
-				me._labelEl.text(selectedLabel);
-				me.closeMenu();
-				me.emit('select', this._selectedOption);
-			});
-
-			var menuEl = $(menu);
-			menuEl.append(ulEl);
-			this._menuEl = $(menuWrapper);
-			this._menuEl.append(menuEl);
-
-			var height = this.rootEl[0].offsetHeight;
-			var offset = this.rootEl.offset();
-
-			this._menuEl.css({
-				'top': offset.top + height,
-				'left': offset.left,
-				'width': this.rootEl[0].offsetWidth
-			});
-
-			var menuMaxHeight = $(window).height() - offset.top - height - 10;
-		 menuEl.css({
-			 'max-height': menuMaxHeight
-		 });
-			ulEl.css({
-				'max-height': menuMaxHeight
-			})
-
-			$('body').append(this._menuEl);
-
-			this._open = true;
-
-			function onBodyClick(e) {
-				if ($(e.target).closest(this._menuEl).length < 1) {
-					me.closeMenu();
-					me._open = false;
-					$('html').off('click', onBodyClick);
-				}
-
-			}
-
-			setTimeout(function() {
-				$('html').on('click', onBodyClick);
-			});
+		if (!this.dataSource.hasOptions()) {
+			throw 'Do not yet support picklists without options';
 		}
+
+		var picklistOptions = this.dataSource.getOptions();
+		var labelProp = this._options.dataSource.label;
+		for (var i = 0; i < picklistOptions.length; i++) {
+			var label = (typeof picklistOptions[i] === 'object')?(picklistOptions[i][labelProp] || ''):picklistOptions[i];
+			var li = '<li';
+			if (picklistOptions[i] === this._selectedOption) { // TODO: Won't work, if user passed in value
+				li += ' class="selected"';
+			}
+			li += ' ref="' + i + '"><a><span class="text">' + label + '</span></a></li>';
+			ulEl.append(li);
+		}
+
+		ulEl.on('click', 'li', function() {
+			var optionIdx = $(this).attr('ref');
+			me.selectByIndex(optionIdx);
+			me.closeMenu();
+		});
+
+		var menuEl = $(menu);
+		menuEl.append(ulEl);
+		this._menuEl = $(menuWrapper);
+		this._menuEl.append(menuEl);
+
+		var height = this.rootEl[0].offsetHeight;
+		var offset = this.rootEl.offset();
+
+		this._menuEl.css({
+			'top': offset.top + height,
+			'left': offset.left,
+			'width': this.rootEl[0].offsetWidth
+		});
+
+		var menuMaxHeight = $(window).height() - offset.top - height - 10;
+	 menuEl.css({
+		 'max-height': menuMaxHeight
+	 });
+		ulEl.css({
+			'max-height': menuMaxHeight
+		})
+
+		$('body').append(this._menuEl);
+
+		this._open = true;
+
+		function onBodyClick(e) {
+			if ($(e.target).closest(me._menuEl).length < 1 && $(e.target).closest(me.rootEl).length < 1) {
+				me.closeMenu();
+				$('html').off('click', onBodyClick);
+			}
+
+		}
+
+		setTimeout(function() {
+			$('html').on('click', onBodyClick);
+		});
+
+		this.emit('openMenuPost');
 	},
 
 	select: function(value) {
-		var picklistValues = this._options.options;
-		var valueProp = this._options.valueProp;
-		if (valueProp) {
-			for (var i = 0; i < picklistValues; i++) {
-				if (picklistValues[i][valueProp] === value) {
-					this._selectedOption = picklistValues[i];
-					this._labelEl.text(picklistValues[i][this._options.labelProp]);
-					break;
-				}
-			}
+		this._selectedOption = this.dataSource.getOption(value);
+		if (this._options.dataSource.label) {
+			this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
 		} else {
-			this._selectedOption = value;
 			this._labelEl.text(value);
 		}
+		this.emit('select', this._selectedOption);
+	},
+
+	selectByIndex: function(idx) {
+		this._selectedOption = this.dataSource.getOptionByIndex(idx);
+		if (this._options.dataSource.label) {
+			this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
+		} else {
+			this._labelEl.text(this._selectedOption);
+		}
+		this.emit('select', this._selectedOption);
+	},
+
+	getSelectedOption: function() {
+		return this._selectedOption;
 	}
 });
 
