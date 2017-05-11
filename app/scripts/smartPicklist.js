@@ -21,6 +21,7 @@ var SmartPicklist = Observable.extend({
 			}
 		}
 
+		this._selectedOptions = [];
 		this._open = false;
 		this._options = options;
 		this._selectedOption = options.selectedOption || undefined;
@@ -85,14 +86,19 @@ var SmartPicklist = Observable.extend({
 			if (picklistOptions[i] === this._selectedOption) { // TODO: Won't work, if user passed in value
 				li += ' class="selected"';
 			}
-			li += ' ref="' + i + '"><a><span class="text">' + label + '</span></a></li>';
+			li += ' ref="' + i + '"><a>' + label + '</a></li>';
 			ulEl.append(li);
 		}
 
 		ulEl.on('click', 'li', function() {
 			var optionIdx = $(this).attr('ref');
-			me.selectByIndex(optionIdx);
-			me.closeMenu();
+
+			if (me._options.multi) {
+				me.toggleByIndex(optionIdx, $(this));
+			} else {
+				me.selectByIndex(optionIdx);
+				me.closeMenu();
+			}
 		});
 
 		var menuEl = $(menu);
@@ -100,24 +106,69 @@ var SmartPicklist = Observable.extend({
 		this._menuEl = $(menuWrapper);
 		this._menuEl.append(menuEl);
 
-		var height = this.rootEl[0].offsetHeight;
-		var offset = this.rootEl.offset();
-
-		this._menuEl.css({
-			'top': offset.top + height,
-			'left': offset.left,
-			'width': this.rootEl[0].offsetWidth
-		});
-
-		var menuMaxHeight = $(window).height() - offset.top - height - 10;
-	 menuEl.css({
-		 'max-height': menuMaxHeight
-	 });
-		ulEl.css({
-			'max-height': menuMaxHeight
-		})
-
 		$('body').append(this._menuEl);
+
+		function reposition() {
+
+
+
+			var height = me.rootEl[0].offsetHeight;
+			var offset = me.rootEl.offset();
+			var windowHeight = $(window).height();
+
+			var dropUp = false;
+			var bottomSpace = windowHeight - offset.top - height - 10;
+			var menuHeight = this._menuHeight = this._menuHeight || menuEl.outerHeight();
+
+			if (offset.top > bottomSpace) {
+				// more room above picklist
+
+				if (menuHeight > bottomSpace) {
+					dropUp = true;
+				}
+			}
+
+			if (dropUp) {
+				var top = offset.top - menuHeight - 5;
+				if (top < 10) {
+					top = 10;
+				}
+				me._menuEl.css({
+					'top': top,
+					'left': offset.left,
+					'width': me.rootEl[0].offsetWidth
+				});
+
+				var menuMaxHeight = offset.top - 15;
+				menuEl.css({
+					'max-height': menuMaxHeight
+				});
+				ulEl.css({
+					'max-height': menuMaxHeight
+				});
+
+			} else {
+				me._menuEl.css({
+					'top': offset.top + height,
+					'left': offset.left,
+					'width': me.rootEl[0].offsetWidth
+				});
+
+				var menuMaxHeight = windowHeight - offset.top - height - 10;
+				menuEl.css({
+					'max-height': menuMaxHeight
+				});
+				ulEl.css({
+					'max-height': menuMaxHeight
+				});
+			}
+
+
+		}
+
+		reposition();
+
+
 
 		this._open = true;
 
@@ -131,19 +182,52 @@ var SmartPicklist = Observable.extend({
 
 		setTimeout(function() {
 			$('html').on('click', onBodyClick);
+
+			$(window).on('resize', function() {
+				reposition();
+			});
 		});
 
-		this.emit('openMenuPost');
+		this.emit('openMenuPost', menuEl);
+	},
+
+	toggleByIndex: function(idx, itemEl) {
+		var option = this.dataSource.getOptionByIndex(idx);
+		// for (var i = 0; i < this._selectedOptions.length; i++) {
+		// 	if (this._selectedOptions[i] === option) {
+		//
+		// 	}
+		// }
+		var selectedIdx = this._selectedOptions.indexOf(option);
+		if (selectedIdx < 0) {
+			this._selectedOptions.push(option);
+			itemEl.find('a').append('<i class="icon-arrow-left check-mark"/>');
+		} else {
+			this._selectedOptions.splice(selectedIdx, 1);
+			itemEl.find('i').remove();
+		}
+
+		if (this._selectedOptions.length === 0) {
+			this._labelEl.text('-- Select Option --');
+		} else if (this._options.dataSource.label) {
+			this._labelEl.text(this._selectedOptions.length + ' items selected');
+		} else {
+			this._labelEl.text(this._selectedOptions.join());
+		}
 	},
 
 	select: function(value) {
-		this._selectedOption = this.dataSource.getOption(value);
-		if (this._options.dataSource.label) {
-			this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
+		if (this._options.multi) {
+
 		} else {
-			this._labelEl.text(value);
+			this._selectedOption = this.dataSource.getOption(value);
+			if (this._options.dataSource.label) {
+				this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
+			} else {
+				this._labelEl.text(value);
+			}
+			this.emit('select', this._selectedOption);
 		}
-		this.emit('select', this._selectedOption);
 	},
 
 	selectByIndex: function(idx) {

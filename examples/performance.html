@@ -119,9 +119,14 @@
     <div class="normalPicklist"></div>
 </div>
 <script type="text/javascript">
-    var grid = $('.normalPicklist').smartPicklist({
-
+	$('.normalPicklist').each(function() {
+        var grid = $(this).smartPicklist({
+            dataSource: {
+                options: ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+            }
+        });
     });
+
 </script>
 </body>
 </html>

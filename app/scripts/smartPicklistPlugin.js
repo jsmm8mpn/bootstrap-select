@@ -3,6 +3,7 @@
 var jQuery = require('jquery');
 var SmartPicklist = require('./smartPicklist');
 var utilities = require('./core/fpxUtilities');
+var searchExt = require('./coreExtensions/search');
 
 (function ( $ ) {
 
@@ -23,10 +24,12 @@ var utilities = require('./core/fpxUtilities');
 	};
 
 	$.fn.smartPicklist.defaults = {
-
+		search: {
+			enabled: false
+		}
 	};
 
-	//$.fn.smartGrid.registerExtension(pagerExt);
+	$.fn.smartPicklist.registerExtension(searchExt);
 
 }(jQuery));
 

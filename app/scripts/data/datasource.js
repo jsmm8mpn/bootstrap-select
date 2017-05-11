@@ -53,6 +53,14 @@ var DataSource = Observable.extend({
 	getOptionByIndex: function(idx) {
 		var records = this.getOptions();
 		return records[idx];
+	},
+
+	search: function(text) {
+		if (this.hasOptions()) {
+			this._filteredOptions = this._options.filter(function() {
+
+			});
+		}
 	}
 });
 
