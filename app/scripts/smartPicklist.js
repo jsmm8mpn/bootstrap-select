@@ -21,10 +21,10 @@ var SmartPicklist = Observable.extend({
 			}
 		}
 
-		this._selectedOptions = [];
+		//this._selectedOptions = [];
 		this._open = false;
 		this._options = options;
-		this._selectedOption = options.selectedOption || undefined;
+		//this._selectedOption = options.selectedOption || undefined;
 		var noValueLabel = options.noValueLabel || '-- Select Option --';
 //		if (options.valueProp && !options.labelProp) {
 //			options.labelProp = options.valueProp;
@@ -93,7 +93,7 @@ var SmartPicklist = Observable.extend({
 		ulEl.on('click', 'li', function() {
 			var optionIdx = $(this).attr('ref');
 
-			if (me._options.multi) {
+			if (me._options.multi.enabled) {
 				me.toggleByIndex(optionIdx, $(this));
 			} else {
 				me.selectByIndex(optionIdx);
@@ -189,60 +189,60 @@ var SmartPicklist = Observable.extend({
 		});
 
 		this.emit('openMenuPost', menuEl);
-	},
-
-	toggleByIndex: function(idx, itemEl) {
-		var option = this.dataSource.getOptionByIndex(idx);
-		// for (var i = 0; i < this._selectedOptions.length; i++) {
-		// 	if (this._selectedOptions[i] === option) {
-		//
-		// 	}
-		// }
-		var selectedIdx = this._selectedOptions.indexOf(option);
-		if (selectedIdx < 0) {
-			this._selectedOptions.push(option);
-			itemEl.find('a').append('<i class="icon-arrow-left check-mark"/>');
-		} else {
-			this._selectedOptions.splice(selectedIdx, 1);
-			itemEl.find('i').remove();
-		}
-
-		if (this._selectedOptions.length === 0) {
-			this._labelEl.text('-- Select Option --');
-		} else if (this._options.dataSource.label) {
-			this._labelEl.text(this._selectedOptions.length + ' items selected');
-		} else {
-			this._labelEl.text(this._selectedOptions.join());
-		}
-	},
-
-	select: function(value) {
-		if (this._options.multi) {
-
-		} else {
-			this._selectedOption = this.dataSource.getOption(value);
-			if (this._options.dataSource.label) {
-				this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
-			} else {
-				this._labelEl.text(value);
-			}
-			this.emit('select', this._selectedOption);
-		}
-	},
-
-	selectByIndex: function(idx) {
-		this._selectedOption = this.dataSource.getOptionByIndex(idx);
-		if (this._options.dataSource.label) {
-			this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
-		} else {
-			this._labelEl.text(this._selectedOption);
-		}
-		this.emit('select', this._selectedOption);
-	},
-
-	getSelectedOption: function() {
-		return this._selectedOption;
 	}
+
+	// toggleByIndex: function(idx, itemEl) {
+	// 	var option = this.dataSource.getOptionByIndex(idx);
+	// 	// for (var i = 0; i < this._selectedOptions.length; i++) {
+	// 	// 	if (this._selectedOptions[i] === option) {
+	// 	//
+	// 	// 	}
+	// 	// }
+	// 	var selectedIdx = this._selectedOptions.indexOf(option);
+	// 	if (selectedIdx < 0) {
+	// 		this._selectedOptions.push(option);
+	// 		itemEl.find('a').append('<i class="icon-arrow-left check-mark"/>');
+	// 	} else {
+	// 		this._selectedOptions.splice(selectedIdx, 1);
+	// 		itemEl.find('i').remove();
+	// 	}
+	//
+	// 	if (this._selectedOptions.length === 0) {
+	// 		this._labelEl.text('-- Select Option --');
+	// 	} else if (this._options.dataSource.label) {
+	// 		this._labelEl.text(this._selectedOptions.length + ' items selected');
+	// 	} else {
+	// 		this._labelEl.text(this._selectedOptions.join());
+	// 	}
+	// },
+	//
+	// select: function(value) {
+	// 	if (this._options.multi) {
+	//
+	// 	} else {
+	// 		this._selectedOption = this.dataSource.getOption(value);
+	// 		if (this._options.dataSource.label) {
+	// 			this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
+	// 		} else {
+	// 			this._labelEl.text(value);
+	// 		}
+	// 		this.emit('select', this._selectedOption);
+	// 	}
+	// },
+	//
+	// selectByIndex: function(idx) {
+	// 	this._selectedOption = this.dataSource.getOptionByIndex(idx);
+	// 	if (this._options.dataSource.label) {
+	// 		this._labelEl.text(this._selectedOption[this._options.dataSource.label]);
+	// 	} else {
+	// 		this._labelEl.text(this._selectedOption);
+	// 	}
+	// 	this.emit('select', this._selectedOption);
+	// },
+	//
+	// getSelectedOption: function() {
+	// 	return this._selectedOption;
+	// }
 });
 
 module.exports = SmartPicklist;

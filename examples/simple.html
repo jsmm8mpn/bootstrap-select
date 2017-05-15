@@ -34,7 +34,7 @@
 
     var picklist1 = $('#picklist').smartPicklist({
         dataSource: {
-            options: ['One', 'Two', 'Three']
+            options: ['One', 'Two', 'Three', 'A really really long value that should make the width get really really big']
         },
         listeners: {
             select: function(option) {
@@ -87,7 +87,9 @@
     });
 
     var picklist4 = $('#picklist4').smartPicklist({
-        multi: true,
+        multi: {
+        	enabled: true
+        },
         dataSource: {
             options: ['One', 'Two', 'Three']
         },
