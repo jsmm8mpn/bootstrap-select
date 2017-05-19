@@ -1,14 +1,13 @@
 var Observable = require('./core/fpxObservable');
 var DataSource = require('./data/datasource');
 
-var wrapper = '<div class="btn-group bootstrap-select"/>';
 var button = '<button type="button" class="btn dropdown-toggle btn-default"/>';
-var label = '<span class="filter-option pull-left"></span>';
-var caret = '<span class="bs-caret"><span class="icon-arrow-down"></span></span>';
+var label = '<span class="picklistLabel"></span>';
+var caret = '<span class="picklistArrow"><span class="icon-arrow-down"></span></span>';
 
-var menuWrapper = '<div class="btn-group bootstrap-select open" style="position: absolute"/>';
-var menu = '<div class="dropdown-menu open" style="overflow: hidden; min-height: 0px"/>';
-var ul = '<ul class="dropdown-menu inner selectpicker" role="menu" style="overflow-y: auto; min-height: 0px"/>';
+//var menuWrapper = '<div class="btn-group bootstrap-select" style="position: absolute"/>';
+var menu = '<div class="smartPicklistMenu" style="overflow: hidden; min-height: 0px"/>';
+var ul = '<ul class="menuList" style="overflow-y: auto; min-height: 0px"/>';
 
 var SmartPicklist = Observable.extend({
 
@@ -33,9 +32,9 @@ var SmartPicklist = Observable.extend({
 		this.dataSource = new DataSource(options.dataSource);
 
 
-		$element.addClass('btn-group bootstrap-select');
+		$element.addClass('btn-group smartPicklist');
 		this._labelEl = $(label);
-		this._labelEl.text(noValueLabel);
+		//this._labelEl.text(noValueLabel);
 		var buttonEl = $(button);
 		buttonEl.append(this._labelEl);
 		buttonEl.append(caret);
@@ -103,8 +102,9 @@ var SmartPicklist = Observable.extend({
 
 		var menuEl = $(menu);
 		menuEl.append(ulEl);
-		this._menuEl = $(menuWrapper);
-		this._menuEl.append(menuEl);
+		this._menuEl = menuEl;
+		//this._menuEl = $(menuWrapper);
+		//this._menuEl.append(menuEl);
 
 		$('body').append(this._menuEl);
 
@@ -136,7 +136,7 @@ var SmartPicklist = Observable.extend({
 				me._menuEl.css({
 					'top': top,
 					'left': offset.left,
-					'width': me.rootEl[0].offsetWidth
+					'min-width': me.rootEl[0].offsetWidth
 				});
 
 				var menuMaxHeight = offset.top - 15;
@@ -151,7 +151,7 @@ var SmartPicklist = Observable.extend({
 				me._menuEl.css({
 					'top': offset.top + height,
 					'left': offset.left,
-					'width': me.rootEl[0].offsetWidth
+					'min-width': me.rootEl[0].offsetWidth
 				});
 
 				var menuMaxHeight = windowHeight - offset.top - height - 10;

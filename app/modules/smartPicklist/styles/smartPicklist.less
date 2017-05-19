@@ -1,0 +1,154 @@
+.btn-group,
+.btn-group-vertical {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle; // match .btn alignment given font-size hack above
+	> .btn {
+		position: relative;
+		float: left;
+		// Bring the "active" button to the front
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			z-index: 1;
+		}
+		&:focus {
+			// Remove focus outline when dropdown JS adds it after closing the menu
+			outline: none;
+		}
+	}
+}
+// Prevent double borders when buttons are next to each other
+.btn-group {
+	.btn + .btn,
+	.btn + .btn-group,
+	.btn-group + .btn,
+	.btn-group + .btn-group {
+		margin-left: -1px;
+	}
+}
+
+.btn {
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.428571429;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	.button-border-radius();
+	span {
+		vertical-align: middle;
+	}
+	[class^="icon-"],
+	[class*=" icon-"] {
+		margin-right: 6px;
+		vertical-align: middle;
+		font-size: 12px;
+	}
+}
+
+.btn-default {
+	color: @button-default-text;
+	background-color: @button-default-bgr;
+	border-color: @gs-medium;
+}
+
+/*------------------------------------------------------*\
+		Smart Picklist
+\*------------------------------------------------------*/
+
+.smartPicklist {
+	min-width: 220px;
+
+
+	.picklistLabel {
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		float: left;
+		text-align: left;
+		flex: 1 1 auto;
+	}
+
+	.picklistArrow {
+		width: 15px;
+		flex: 0 0 auto;
+	}
+
+	.btn {
+		display: flex;
+		width: 100%;
+	}
+
+	//.btn:focus, .btn:hover {
+	//	-webkit-box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	//	-moz-box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	//	box-shadow: 0 0 3px fade(@brand-secondary-light, 80%);
+	//	.transition(@transition-box-shadow);
+	//}
+}
+
+.smartPicklistMenu {
+	position: absolute;
+	z-index: @smartPicklistMenuZIndex;
+	min-width: 160px;
+
+	.menuList {
+		padding: 5px 0;
+		margin: 2px 0 0;
+		list-style: none;
+		font-size: 14px;
+		background-color: #ffffff;
+		border: 1px solid #cccccc;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		border-radius: 4px;
+		-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+		background-clip: padding-box;
+	}
+
+	.divider {
+		height: 1px;
+		margin: 9px 0;
+		overflow: hidden;
+		background-color: #e5e5e5;
+	}
+
+	ul > li > a {
+		display: block;
+		padding: 3px 20px;
+		clear: both;
+		font-weight: normal;
+		line-height: 1.42857143;
+		white-space: nowrap;
+	}
+
+	ul > li.selected > a {
+		background-color: #eeeeee;
+	}
+
+	ul > li > a:hover,
+	ul > li > a:focus {
+		text-decoration: none;
+		background-color: #eeeeee;
+		.transition();
+	}
+
+	li > a {
+		cursor: pointer;
+		min-height: 26px;
+	}
+}
+

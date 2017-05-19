@@ -50,7 +50,7 @@ var searchExt = require('./coreExtensions/search');
 		title: undefined,
 		width: 'auto',
 		search: {
-			enabled: true,
+			enabled: false,
 			placeholder: 'Search for items...',
 			mode: 'contains' // startswith
 		}

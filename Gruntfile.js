@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 				options: {
 					external: ['jquery']
 				},
-				src: ['./app/scripts/**/*.js', '!./app/scripts/**/*.test.js'],
+				src: ['./app/**/scripts/**/*.js', '!./app/**/scripts/**/*.test.js'],
 				dest: './dist/smart-picklist.js'
 			}
 		},
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 					//compress: true
 				},
 				files: {
-					'dist/smart-picklist.css': 'app/vars/vars.less'
+					'dist/smart-picklist.css': 'app/**/vars/vars.less'
 				}
 			}
 		},
@@ -73,14 +73,14 @@ module.exports = function(grunt) {
 		watch: {
 			options: {
 				spawn: false,
-				livereload: 35729
+				livereload: 35728
 			},
 			js: {
-				files: ['./app/scripts/**/*.js'],
+				files: ['./app/**/scripts/**/*.js'],
 				tasks: ['browserify:dist', 'replace']
 			},
 			less: {
-				files: ['app/vars/vars.less', 'app/styles/**/*.less'],
+				files: ['app/**/vars/vars.less', 'app/**/styles/**/*.less'],
 				tasks: 'less'
 			}
 		}

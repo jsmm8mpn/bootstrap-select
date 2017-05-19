@@ -3,8 +3,10 @@ var SmartPicklist = require('./smartPicklist');
 var SmartPicklistSingle = SmartPicklist.extend({
 
 	_init: function($element, options) {
-		this._selectedOption = options.selectedOption || undefined;
 		this._super($element, options);
+		if (options.selectedOption) {
+			this.select(options.selectedOption);
+		}
 	},
 
 	select: function(value) {
